@@ -11,7 +11,7 @@ with open('calibration_images/matrices.json', "r") as f:
    data = json.load(f)["camera_matrix"]["data"]
 
 detector = Detector(
-    families="tag36h11",
+    families="tag16h5",
     nthreads=1,
     quad_decimate=1.0,
     quad_sigma=0.0,
@@ -29,7 +29,7 @@ logo = cv2.resize(logo, (size, size))
 LINE_LENGTH = 5
 CENTER_COLOR = (0, 255, 0)
 CORNER_COLOR = (255, 0, 255)
-width = 6.25 #in
+width = 6 #in
 px, dist1 = 380,16 # px_width of 191 at dist of 24 in
 focal_length= (px*dist1)/width # for in
 in_to_m = 0.0254
@@ -70,7 +70,6 @@ ret, mask = cv2.threshold(img2gray, 1, 255, cv2.THRESH_BINARY)
 while cam:
     result, image = cam.read()
     grayimg = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    print(image.shape)
 	# look for tags
     detections = detector.detect(grayimg, estimate_tag_pose=True, tag_size=width*in_to_m, camera_params=cam_prams)
     if detections:
